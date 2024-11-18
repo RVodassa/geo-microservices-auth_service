@@ -1,9 +1,9 @@
 package main
 
 import (
-	grpc_service "github.com/RVodassa/geo-microservices-auth/internal/grpc-server"
-	"github.com/RVodassa/geo-microservices-auth/internal/service"
-	proto "github.com/RVodassa/geo-microservices-auth/proto/generated"
+	authGrpcServer "github.com/RVodassa/geo-microservices-auth_service/internal/grpc-server"
+	authService "github.com/RVodassa/geo-microservices-auth_service/internal/service"
+	proto "github.com/RVodassa/geo-microservices-auth_service/proto/generated"
 	userService "github.com/RVodassa/geo-microservices-user/proto/generated"
 	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
@@ -34,10 +34,10 @@ func main() {
 	client := userService.NewUserServiceClient(conn)
 
 	// Создание сервиса авторизации
-	authService := service.NewAuthService(client, jwtSecret)
+	authService := authService.NewAuthService(client, jwtSecret)
 
 	// Регистрация сервиса в gRPC сервере
-	authGrpcService := grpc_service.NewAuthServiceServer(authService)
+	authGrpcService := authGrpcServer.NewAuthServiceServer(authService)
 
 	// Регистрируем сервис в gRPC сервере
 	proto.RegisterAuthServiceServer(grpcServer, authGrpcService)
