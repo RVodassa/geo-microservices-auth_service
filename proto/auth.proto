@@ -1,0 +1,48 @@
+// protoc --go_out=./proto/ --go-grpc_out=./proto/ --proto_path=./proto ./proto/auth.proto
+
+syntax = "proto3";
+
+package auth_service;
+
+option go_package = "./generated";
+
+service AuthService {
+  rpc Register (RegisterRequest) returns (RegisterResponse);
+  rpc Login (LoginRequest) returns (LoginResponse);
+  rpc CheckToken (CheckTokenRequest) returns (CheckTokenResponse);
+}
+
+message CheckTokenRequest{
+  string token = 1;
+}
+
+message CheckTokenResponse{
+  bool status = 1;
+}
+
+message LoginRequest {
+  string login = 1;
+  string password = 2;
+}
+
+message LoginResponse{
+  string token = 1;
+}
+
+// Запрос на регистрацию пользователя
+message RegisterRequest {
+  string login = 1;
+  string password = 2;
+}
+
+// Ответ на регистрацию пользователя
+message RegisterResponse {
+  uint64 id = 1;
+}
+
+// Описание сущности пользователя
+message User {
+  uint64 id = 1;
+  string login = 2;
+}
+
