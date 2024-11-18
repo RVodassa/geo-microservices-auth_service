@@ -1,4 +1,4 @@
-module github.com/RVodassa/geo-microservices-auth
+module github.com/RVodassa/geo-microservices-auth_service
 
 go 1.23.3
 
