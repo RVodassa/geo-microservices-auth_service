@@ -2,9 +2,9 @@ package authGrpcServer
 
 import (
 	"context"
-	"github.com/RVodassa/geo-microservices-auth/internal/domain/entity"
-	authService "github.com/RVodassa/geo-microservices-auth/internal/service"
-	pb "github.com/RVodassa/geo-microservices-auth/proto/generated"
+	"github.com/RVodassa/geo-microservices-auth_service/internal/domain/entity"
+	authService "github.com/RVodassa/geo-microservices-auth_service/internal/service"
+	pb "github.com/RVodassa/geo-microservices-auth_service/proto/generated"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

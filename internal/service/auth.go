@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/RVodassa/geo-microservices-auth/internal/domain/entity"
+	"github.com/RVodassa/geo-microservices-auth_service/internal/domain/entity"
 	userService "github.com/RVodassa/geo-microservices-user/proto/generated"
 	"github.com/dgrijalva/jwt-go"
 	"time"
