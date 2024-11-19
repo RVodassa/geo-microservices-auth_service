@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-const expTime = time.Minute // Токен будет действовать 1 час
+const expTime = time.Hour // Токен будет действовать 1 час
 
 type AuthServiceProvider interface {
 	Register(ctx context.Context, user *entity.User) (id uint64, err error)
