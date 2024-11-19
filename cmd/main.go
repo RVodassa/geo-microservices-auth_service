@@ -7,13 +7,12 @@ import (
 	userService "github.com/RVodassa/geo-microservices-user_service/proto/generated"
 	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"log"
 	"net"
 	"os"
 	"sync"
 )
-
-const userServiceAddress = "user-service:10101"
 
 func main() {
 	if err := godotenv.Load("/app/.env"); err != nil {
@@ -21,11 +20,12 @@ func main() {
 	}
 
 	jwtSecret := os.Getenv("JWT_SECRET")
+	addrUserService := os.Getenv("ADDR_USER_SERVICE")
 	// Создание сервера
 	grpcServer := grpc.NewServer()
 
 	// Устанавливаем соединение с сервером
-	conn, err := grpc.Dial(userServiceAddress, grpc.WithInsecure(), grpc.WithBlock())
+	conn, err := grpc.NewClient(addrUserService, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("Не удалось подключиться к серверу: %v", err)
 	}
@@ -67,6 +67,7 @@ func main() {
 	case err := <-errChan:
 		if err != nil {
 			log.Fatalf("Ошибка при запуске gRPC сервера: %v", err)
+			return
 		}
 	}
 
