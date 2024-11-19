@@ -11,14 +11,14 @@ RUN go mod download
 COPY . .
 
 # Компилируем приложение
-RUN go build -o auth-service ./cmd/main.go
+RUN go build -o authService-service ./cmd/main.go
 
 FROM alpine
 
 WORKDIR /root/
 
 # Копируем скомпилированное приложение из образа builder
-COPY --from=builder /app/auth-service .
+COPY --from=builder /app/authService-service .
 
 COPY .env .
 
@@ -26,4 +26,4 @@ COPY .env .
 EXPOSE 20202
 
 # Запускаем приложение
-CMD ["./auth-service"]
+CMD ["./authService-service"]
