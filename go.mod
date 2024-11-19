@@ -3,7 +3,7 @@ module github.com/RVodassa/geo-microservices-auth_service
 go 1.23.3
 
 require (
-	github.com/RVodassa/geo-microservices-user v1.0.2
+	github.com/RVodassa/geo-microservices-user_service v1.0.3
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/joho/godotenv v1.5.1
 	google.golang.org/grpc v1.68.0

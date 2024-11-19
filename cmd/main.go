@@ -4,7 +4,7 @@ import (
 	authGrpcServer "github.com/RVodassa/geo-microservices-auth_service/internal/grpc-server"
 	authService "github.com/RVodassa/geo-microservices-auth_service/internal/service"
 	proto "github.com/RVodassa/geo-microservices-auth_service/proto/generated"
-	userService "github.com/RVodassa/geo-microservices-user/proto/generated"
+	userService "github.com/RVodassa/geo-microservices-user_service/proto/generated"
 	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
 	"log"
