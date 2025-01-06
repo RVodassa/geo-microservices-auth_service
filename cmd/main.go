@@ -15,17 +15,18 @@ import (
 )
 
 func main() {
-	if err := godotenv.Load("/app/.env"); err != nil {
+	if err := godotenv.Load(".env"); err != nil {
 		log.Println("Ошибка загрузки .env файла")
 	}
 
 	jwtSecret := os.Getenv("JWT_SECRET")
-	addrUserService := os.Getenv("ADDR_USER_SERVICE")
+
+	address := "user-service:10101"
 	// Создание сервера
 	grpcServer := grpc.NewServer()
 
 	// Устанавливаем соединение с сервером
-	conn, err := grpc.NewClient(addrUserService, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient(address, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("Не удалось подключиться к серверу: %v", err)
 	}

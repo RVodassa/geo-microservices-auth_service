@@ -22,7 +22,7 @@ func (s *AuthServiceServer) Register(ctx context.Context, req *pb.RegisterReques
 	// Создание сущности пользователя без хеширования пароля
 	user := &entity.User{
 		Login:    req.Login,
-		Password: req.Password, // Пароль в открытом виде
+		Password: req.Password,
 	}
 
 	// Регистрация пользователя через сервис
@@ -38,6 +38,7 @@ func (s *AuthServiceServer) Register(ctx context.Context, req *pb.RegisterReques
 	return resp, nil
 }
 
+// Login Summary
 func (s *AuthServiceServer) Login(ctx context.Context, req *pb.LoginRequest) (*pb.LoginResponse, error) {
 
 	token, err := s.authService.Login(ctx, req.Login, req.Password)
