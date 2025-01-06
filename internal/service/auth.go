@@ -30,12 +30,11 @@ func NewAuthService(userService userService.UserServiceClient, secret string) *A
 	}
 }
 
-// Проверка токена
+// CheckToken проверка токена
 func (s *AuthService) CheckToken(ctx context.Context, tokenString string) (bool, error) {
 	// Секретный ключ (должен быть таким же, как при создании токена)
 	secretKey := []byte(s.secret)
-
-	// Парсим токен
+	
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		// Проверка алгоритма токена (например, HMAC)
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
