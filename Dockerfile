@@ -1,29 +1,32 @@
+# Этап сборки
 FROM golang:1.23.3-alpine AS builder
 
-WORKDIR /app
+WORKDIR /app/auth-service
 
 RUN apk add --no-cache gcc musl-dev
 
+# Копируем файлы зависимостей
 COPY go.mod go.sum ./
 RUN go mod download
 
-# Копируем исходники приложения в рабочую директорию
+# Копируем исходный код
 COPY . .
 
-# Компилируем приложение
-RUN go build -o authService-service ./cmd/main.go
+# Сборка приложения
+RUN CGO_ENABLED=0 go build -ldflags="-s -w" -o authService-service main.go
 
+# Финальный образ
 FROM alpine
 
-WORKDIR /root/
+WORKDIR /app/auth-service
 
-# Копируем скомпилированное приложение из образа builder
-COPY --from=builder /app/authService-service .
+# Копируем скомпилированное приложение и конфиги
+COPY --from=builder /app/auth-service/authService-service .
+COPY ./configs /app/auth-service/configs
+COPY .env /app/auth-service/
 
-COPY .env .
-
-# Открываем порт 20202
+# порт
 EXPOSE 20202
 
-# Запускаем приложение
+# Запуск приложения
 CMD ["./authService-service"]

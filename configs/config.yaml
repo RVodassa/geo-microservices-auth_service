@@ -1,0 +1,6 @@
+grpc_services:
+  - name: "user-service"
+    addr: "user-service"
+    port: 10101
+
+serve_port: ":20202"
