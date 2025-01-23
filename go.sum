@@ -1,5 +1,7 @@
 github.com/RVodassa/geo-microservices-user_service v1.0.3 h1:+rIIPLK/l8rNZWX2qDFSRNfYL0BMQ868sCjVMn//Ajw=
 github.com/RVodassa/geo-microservices-user_service v1.0.3/go.mod h1:T12Fn2KM6YYYgmp8wQg2SE0BMyGD+Kj+YXKAWVkMkms=
+github.com/RVodassa/slog_utils v1.0.2 h1:dyjX54Vmci0eMl96739/fg7XZTYTpVsm5iUtOyu6B5U=
+github.com/RVodassa/slog_utils v1.0.2/go.mod h1:50oiQFzSQZuZsFkPLNpqP59+kT1umFMNrDHfRtHlSs0=
 github.com/dgrijalva/jwt-go v3.2.0+incompatible h1:7qlOGliEKZXTDg6OTjfoBKDXWrumCAMpl/TFQ4/5kLM=
 github.com/dgrijalva/jwt-go v3.2.0+incompatible/go.mod h1:E3ru+11k8xSBh+hMPgOLZmtrrCbhqsmaPHjLKYnJCaQ=
 github.com/golang/protobuf v1.5.4 h1:i7eJL8qZTpSEXOPTxNKhASYpMn+8e5Q6AdndVa1dWek=

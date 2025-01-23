@@ -1,7 +1,7 @@
 package serve
 
 import (
-	authGrpcServer "github.com/RVodassa/geo-microservices-auth_service/internal/grpc-server"
+	"github.com/RVodassa/geo-microservices-auth_service/internal/handlers/grpcHandlers"
 	"github.com/RVodassa/geo-microservices-auth_service/internal/service"
 	proto "github.com/RVodassa/geo-microservices-auth_service/proto/generated"
 	"google.golang.org/grpc"
@@ -11,9 +11,12 @@ import (
 	"time"
 )
 
+type Serve struct {
+}
+
 // RunServe Запуск gRPC сервера
 func RunServe(authService *service.AuthService, port string) error {
-	authGrpcService := authGrpcServer.NewAuthServiceServer(authService)
+	authGrpcService := grpcHandlers.NewAuthServiceServer(authService)
 	grpcServer := grpc.NewServer()
 	proto.RegisterAuthServiceServer(grpcServer, authGrpcService)
 

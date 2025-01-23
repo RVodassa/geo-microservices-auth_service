@@ -1,4 +1,4 @@
-package authGrpcServer
+package grpcHandlers
 
 import (
 	"context"

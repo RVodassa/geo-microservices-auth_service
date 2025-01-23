@@ -2,10 +2,11 @@ package app
 
 import (
 	"fmt"
+	"github.com/RVodassa/geo-microservices-auth_service/app/config"
+	"github.com/RVodassa/geo-microservices-auth_service/internal/domain/logger"
 	"github.com/RVodassa/geo-microservices-auth_service/internal/serve"
 	serviceAuth "github.com/RVodassa/geo-microservices-auth_service/internal/service"
 	serviceUser "github.com/RVodassa/geo-microservices-user_service/proto/generated"
-	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"log"
@@ -13,29 +14,25 @@ import (
 )
 
 const UserServiceName = "user-service"
+const SecretJWT = "JWT_SECRET"
 
-func RunApp(configPath string) error {
-	// Загрузка .env файла
-	if err := godotenv.Load(".env"); err != nil {
-		log.Printf("Ошибка загрузки .env файла: %v", err)
-		return fmt.Errorf("ошибка загрузки .env файла: %v", err)
-	}
+type App struct {
+	log logger.Logger
+	cfg *config.Config
+}
 
-	// Проверка обязательных переменных окружения
-	jwtSecret := os.Getenv("JWT_SECRET")
-	if jwtSecret == "" {
-		return fmt.Errorf("JWT_SECRET не установлен в .env файле")
+func NewApp(log logger.Logger, cfg *config.Config) *App {
+	return &App{
+		log: log,
+		cfg: cfg,
 	}
+}
 
-	log.Println("Загрузка конфигурации...")
-	cfg, err := LoadConfig(configPath)
-	if err != nil {
-		return fmt.Errorf("ошибка загрузки конфигурации: %v", err)
-	}
-	log.Printf("Конфигурация загружена: %+v", cfg)
+func (app *App) Run() error {
 
 	log.Println("Установка соединений с gRPC сервисами...")
-	grpcConns, err := setupGRPCClient(cfg.GRPCServices)
+
+	grpcConns, err := setupGRPCClient(app.cfg.GRPCServices)
 	if err != nil {
 		return fmt.Errorf("ошибка подключения к gRPC сервисам: %v", err)
 	}
@@ -52,17 +49,18 @@ func RunApp(configPath string) error {
 	client := serviceUser.NewUserServiceClient(grpcConns[UserServiceName])
 	log.Println("Подключение к serviceUser успешно установлено")
 
-	authService := serviceAuth.NewAuthService(client, jwtSecret)
+	secretJWT := os.Getenv(SecretJWT)
+	authService := serviceAuth.NewAuthService(client, secretJWT)
 	log.Println("Сервис авторизации успешно создан")
 
-	if err = serve.RunServe(authService, cfg.ServePort); err != nil {
+	if err = serve.RunServe(authService, app.cfg.ServePort); err != nil {
 		return fmt.Errorf("ошибка при запуске сервера: %v", err)
 	}
 
 	return nil
 }
 
-func setupGRPCClient(grpcServices []GRPCService) (map[string]*grpc.ClientConn, error) {
+func setupGRPCClient(grpcServices []config.GRPCService) (map[string]*grpc.ClientConn, error) {
 
 	conns := make(map[string]*grpc.ClientConn) // service_name:client
 

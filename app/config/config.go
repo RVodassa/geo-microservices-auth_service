@@ -1,4 +1,4 @@
-package app
+package config
 
 import (
 	"fmt"
@@ -10,6 +10,8 @@ import (
 
 type Config struct {
 	GRPCServices []GRPCService `yaml:"grpc_services"`
+	Env          string        `yaml:"env"`
+	LogLevel     string        `yaml:"log_level"`
 	ServePort    string        `yaml:"serve_port"`
 }
 
